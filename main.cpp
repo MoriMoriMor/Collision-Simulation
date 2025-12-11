@@ -6,26 +6,31 @@
 
 class Ball {
 public:
-    int x, y;
-    int dx, dy;
+    float x, y;      // ubah ke float untuk gerakan lebih halus
+    float dx, dy;
     int r;
     int color;
 
     Ball() {
-        r = 23;
+        r = 20;
         x = rand() % (getmaxx() - 2*r) + r;
         y = rand() % (getmaxy() - 2*r) + r;
 
         dx = (rand() % 3 + 2) * (rand() % 2 ? 1 : -1);
         dy = (rand() % 3 + 2) * (rand() % 2 ? 1 : -1);
 
-        color = rand() % 12 + 1;
+        color = rand() % 14 + 1;   // tambah variasi warna
     }
 
     void move() {
         x += dx;
         y += dy;
 
+        // sedikit "damping" supaya tidak terlalu cepat
+        dx *= 0.999;
+        dy *= 0.999;
+
+        // bouncing
         if (x - r < 0 || x + r > getmaxx()) dx = -dx;
         if (y - r < 0 || y + r > getmaxy()) dy = -dy;
     }
@@ -33,24 +38,38 @@ public:
     void draw() {
         setcolor(color);
         setfillstyle(SOLID_FILL, color);
-        fillellipse(x, y, r, r);
+        fillellipse((int)x, (int)y, r, r);
     }
 };
 
 
-void simpleCollision(Ball b[], int n) {
+// tabrakan dengan sedikit *push* supaya bola tidak menempel
+void improvedCollision(Ball b[], int n) {
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
 
-            int dx = b[i].x - b[j].x;
-            int dy = b[i].y - b[j].y;
-            int dist2 = dx*dx + dy*dy;
-            int minDist = b[i].r + b[j].r;
+            float dx = b[i].x - b[j].x;
+            float dy = b[i].y - b[j].y;
+            float dist2 = dx*dx + dy*dy;
+            float minDist = b[i].r + b[j].r;
 
             if (dist2 <= minDist * minDist) {
-                // tukar kecepatan
-                int tempdx = b[i].dx;
-                int tempdy = b[i].dy;
+
+                // NORMALISASI arah tabrakan
+                float dist = sqrt(dist2);
+                if (dist == 0) dist = 1;
+                float nx = dx / dist;
+                float ny = dy / dist;
+
+                // geser sedikit ke arah berlawanan agar tidak menempel
+                b[i].x += nx * 1.5;
+                b[j].x -= nx * 1.5;
+                b[i].y += ny * 1.5;
+                b[j].y -= ny * 1.5;
+
+                // tukar kecepatan (simple elastic collision)
+                float tempdx = b[i].dx;
+                float tempdy = b[i].dy;
                 b[i].dx = b[j].dx;
                 b[i].dy = b[j].dy;
                 b[j].dx = tempdx;
@@ -59,6 +78,7 @@ void simpleCollision(Ball b[], int n) {
         }
     }
 }
+
 
 int main() {
     initwindow(800, 600);
@@ -70,14 +90,11 @@ int main() {
     while (!kbhit()) {
         cleardevice();
 
-        // gerakkan bola
         for (int i = 0; i < N; i++)
             balls[i].move();
 
-        // deteksi & tangani tabrakan
-        simpleCollision(balls, N);
+        improvedCollision(balls, N);
 
-        // gambar bola
         for (int i = 0; i < N; i++)
             balls[i].draw();
 
