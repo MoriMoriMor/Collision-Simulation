@@ -6,7 +6,7 @@
 
 class Ball {
 public:
-    float x, y;      // ubah ke float untuk gerakan lebih halus
+    float x, y;
     float dx, dy;
     int r;
     int color;
@@ -19,18 +19,16 @@ public:
         dx = (rand() % 3 + 2) * (rand() % 2 ? 1 : -1);
         dy = (rand() % 3 + 2) * (rand() % 2 ? 1 : -1);
 
-        color = rand() % 14 + 1;   // tambah variasi warna
+        color = rand() % 14 + 1;
     }
 
     void move() {
         x += dx;
         y += dy;
 
-        // sedikit "damping" supaya tidak terlalu cepat
         dx *= 0.999;
         dy *= 0.999;
 
-        // bouncing
         if (x - r < 0 || x + r > getmaxx()) dx = -dx;
         if (y - r < 0 || y + r > getmaxy()) dy = -dy;
     }
@@ -42,8 +40,6 @@ public:
     }
 };
 
-
-// tabrakan dengan sedikit *push* supaya bola tidak menempel
 void improvedCollision(Ball b[], int n) {
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
@@ -55,19 +51,16 @@ void improvedCollision(Ball b[], int n) {
 
             if (dist2 <= minDist * minDist) {
 
-                // NORMALISASI arah tabrakan
                 float dist = sqrt(dist2);
                 if (dist == 0) dist = 1;
                 float nx = dx / dist;
                 float ny = dy / dist;
 
-                // geser sedikit ke arah berlawanan agar tidak menempel
                 b[i].x += nx * 1.5;
                 b[j].x -= nx * 1.5;
                 b[i].y += ny * 1.5;
                 b[j].y -= ny * 1.5;
 
-                // tukar kecepatan (simple elastic collision)
                 float tempdx = b[i].dx;
                 float tempdy = b[i].dy;
                 b[i].dx = b[j].dx;
@@ -79,7 +72,6 @@ void improvedCollision(Ball b[], int n) {
     }
 }
 
-
 int main() {
     initwindow(800, 600);
     srand(time(NULL));
@@ -87,13 +79,29 @@ int main() {
     const int N = 40;
     Ball balls[N];
 
-    while (!kbhit()) {
+    bool paused = false;
+
+    while (true) {
+
+        if (kbhit()) {
+            char ch = getch();
+
+            if (ch == ' ') {
+                paused = !paused;
+            }
+            else if (ch == 27) {
+                break;
+            }
+        }
+
         cleardevice();
 
-        for (int i = 0; i < N; i++)
-            balls[i].move();
+        if (!paused) {
+            for (int i = 0; i < N; i++)
+                balls[i].move();
 
-        improvedCollision(balls, N);
+            improvedCollision(balls, N);
+        }
 
         for (int i = 0; i < N; i++)
             balls[i].draw();
