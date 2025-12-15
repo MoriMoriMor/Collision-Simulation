@@ -1,5 +1,4 @@
-Simulasi Partikel dengan Perbandingan Deteksi Tabrakan
-Tentang Program
+Simulasi Partikel
 
 Program ini mensimulasikan sekumpulan partikel (bola) berwarna-warni yang bergerak secara acak di dalam layar. Partikel-partikel tersebut dapat saling bertumbukan dan memantul satu sama lain dengan menerapkan hukum fisika dasar.
 
