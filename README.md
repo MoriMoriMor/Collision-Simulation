@@ -9,7 +9,7 @@ Tools & Technologies
 
 Bahasa Pemrograman: C++
 
-Library Grafis: SFML 2.6.1+
+Library Grafis: gprahic.h
 
 Version Control: Git
 
