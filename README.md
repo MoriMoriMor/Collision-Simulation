@@ -191,3 +191,7 @@ Proyek ini menunjukkan bahwa penggunaan struktur data spasial seperti Quadtree s
 
 <img width="1495" height="808" alt="Screenshot 2025-12-16 230927" src="https://github.com/user-attachments/assets/e3563017-6f06-4ad4-8772-bbed160c91a0" />
 
+
+https://github.com/user-attachments/assets/96a97dab-869d-45cd-8c5d-35b67ef7bb30
+
+
