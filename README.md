@@ -47,6 +47,9 @@ Jumlah partikel dalam simulasi
 
 Dinamika Partikel
 
+<img width="1492" height="809" alt="Screenshot 2025-12-16 230902" src="https://github.com/user-attachments/assets/01f7e437-5b1e-4086-a77b-9f1d7c1f5167" />
+
+
 Spawn On Click
 Klik di mana saja pada layar untuk menambahkan partikel baru.
 
