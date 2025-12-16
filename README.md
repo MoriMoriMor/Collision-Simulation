@@ -186,3 +186,8 @@ Kesimpulan: Quadtree jauh lebih efisien untuk collision detection skala besar
 📌 Kesimpulan
 
 Proyek ini menunjukkan bahwa penggunaan struktur data spasial seperti Quadtree sangat efektif dalam meningkatkan performa simulasi grafis, terutama ketika jumlah objek sangat banyak. Implementasi ini cocok sebagai studi kasus optimasi algoritma dalam simulasi fisika dan game development.
+
+<img width="1492" height="809" alt="Screenshot 2025-12-16 230902" src="https://github.com/user-attachments/assets/01f7e437-5b1e-4086-a77b-9f1d7c1f5167" />
+
+<img width="1495" height="808" alt="Screenshot 2025-12-16 230927" src="https://github.com/user-attachments/assets/e3563017-6f06-4ad4-8772-bbed160c91a0" />
+
